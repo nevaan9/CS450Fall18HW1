@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_reset = null;
     private Timer t = null;
     private Counter ctr = null; // Timer Task
+    private int stoppedAtCount = 0;
+    private int seconds = 0;
+    private int minutes = 0;
 
     // Initialize the audio attributes
     private AudioAttributes aa = null;
@@ -87,17 +90,35 @@ public class MainActivity extends AppCompatActivity {
                     // This is an ANNONYMOUS INNER CLASS
                     // Annonymous inner classes have access to variables in their parent element
 
+                    // Start the Timer
+                    MainActivity.this.t = new Timer();
+
                     // We cannot use this, as this corresponds to the OnClickListener Class
                     t.scheduleAtFixedRate(ctr, 0 , 1);
 
                     // Change the button colors and text
                     changeButton(btn_main, "Stop", getResources().getColor(R.color.holo_red_light));
                 } else if (btn_main.getText().toString().equals("Stop")) {
+                    // Save the count value
+                    stoppedAtCount = ctr.count;
+
                     // Stop the counter
                     t.cancel();
+
                     // Change the Stop button to a Resume Button
                     changeButton(btn_main, "Resume", getResources().getColor(R.color.holo_blue_light));
+
                 } else if (btn_main.getText().toString().equals("Resume")) {
+                    // Start the timer again
+                    MainActivity.this.t = new Timer();
+
+                    // Reset the timerTask
+                    MainActivity.this.ctr = new Counter();
+                    MainActivity.this.ctr.count = stoppedAtCount;
+
+                    // Schdeule the work
+                    t.scheduleAtFixedRate(ctr, 0 , 1);
+
                     // Change the Resume button to a Stop Button
                     changeButton(btn_main, "Stop", getResources().getColor(R.color.holo_red_light));
                 }
@@ -125,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
         //this.tv_seconds.setText(Integer.toString(count)); Make the UI update tot the save count
         this.ctr = new Counter();
         this.ctr.count = count;
-        this.t = new Timer();
 
         // pop ups
         // This is a factory method (a design pattern)
@@ -151,8 +171,6 @@ public class MainActivity extends AppCompatActivity {
     class Counter extends TimerTask {
 
         private int count = 0;
-        private int seconds = 0;
-        private int minutes = 0;
         String millisecond_text = "00";
         String seconds_text = "00";
         String minute_text = "00";
@@ -162,11 +180,11 @@ public class MainActivity extends AppCompatActivity {
             // We cannot update UI elements inside another thread. If we need to, we need to put it inside the follwoing fucntion.
             // The count will take care of the milliseconds
             if (this.count/10 > 100) {
-                if (this.seconds == 59) {
-                    this.seconds = -1;
-                    this.minutes++;
+                if (MainActivity.this.seconds == 59) {
+                    MainActivity.this.seconds = -1;
+                    MainActivity.this.minutes++;
                 }
-                this.seconds++;
+                MainActivity.this.seconds++;
                 this.count = -1;
             }
             // Tell Android to run the following code on the UI thread
@@ -175,8 +193,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     millisecond_text = (Counter.this.count/10 < 10) ? "0" + Counter.this.count/10 : Integer.toString(Counter.this.count/10);
-                    seconds_text = (seconds < 10) ? "0" + seconds : Integer.toString(seconds);
-                    minute_text = (minutes < 10) ? "0" + minutes : Integer.toString(minutes);
+                    seconds_text = (MainActivity.this.seconds < 10) ? "0" + MainActivity.this.seconds : Integer.toString(MainActivity.this.seconds);
+                    minute_text = (MainActivity.this.minutes < 10) ? "0" + MainActivity.this.minutes : Integer.toString(MainActivity.this.minutes);
 
                     MainActivity.this.tv_milliseconds.setText(millisecond_text);
                     MainActivity.this.tv_seconds.setText(String.valueOf(seconds_text));
