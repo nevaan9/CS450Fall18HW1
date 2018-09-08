@@ -18,9 +18,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-
-    // Adding a new comment here to test github
-
     // Gain Access to our UI elements
     // Make them instance variables
     private TextView tv_seconds = null;
