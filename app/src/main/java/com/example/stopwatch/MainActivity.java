@@ -2,6 +2,8 @@ package com.example.stopwatch;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private int stoppedAtCount = 0;
     private int seconds = 0;
     private int minutes = 0;
+    private String millisecond_text = "00";
+    private String seconds_text = "00";
+    private String minute_text = "00";
 
     // Initialize the audio attributes
     private AudioAttributes aa = null;
@@ -42,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Clear the shared preferences
+        SharedPreferences settings = getSharedPreferences("PreferencesName", Context.MODE_PRIVATE);
+        settings.edit().clear().apply();
+
         // Activity main is the activity_main.xml file
         setContentView(R.layout.activity_main);
 
@@ -160,12 +169,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Reload the count from a previous run; if first time running, start at 0
         // preferences to share state --> Preferences work well if we have a small amount of data we want to reload
-        int count = getPreferences(MODE_PRIVATE).getInt("COUNT", 0);
+        String milliseconds = getPreferences(MODE_PRIVATE).getString("milliseconds", "00");
+        String seconds = getPreferences(MODE_PRIVATE).getString("seconds", "00");
+        String minutes = getPreferences(MODE_PRIVATE).getString("minutes", "00");
 
+        this.tv_milliseconds.setText(milliseconds);
+        this.tv_seconds.setText(seconds);
+        this.tv_minutes.setText(minutes);
 
-        //this.tv_seconds.setText(Integer.toString(count)); Make the UI update tot the save count
         this.ctr = new Counter();
-        this.ctr.count = count;
+        this.ctr.count = Integer.parseInt(milliseconds);
 
         // pop ups
         // This is a factory method (a design pattern)
@@ -184,16 +197,15 @@ public class MainActivity extends AppCompatActivity {
         // Save the counter
         getPreferences(MODE_PRIVATE)
                 .edit()
-                .putInt("COUNT", ctr.count)
+                .putString("milliseconds", millisecond_text)
+                .putString("seconds", seconds_text)
+                .putString("minutes", minute_text)
                 .apply();
     }
 
     class Counter extends TimerTask {
 
         private int count = 0;
-        String millisecond_text = "00";
-        String seconds_text = "00";
-        String minute_text = "00";
 
         @Override
         public void run() {
