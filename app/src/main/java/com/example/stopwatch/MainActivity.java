@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 t.cancel();
 
                 // Reset the seconds and minutes instance variables
+                ctr.count = 0;
                 MainActivity.this.seconds = 0;
                 MainActivity.this.minutes = 0;
 
@@ -198,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             // We cannot update UI elements inside another thread. If we need to, we need to put it inside the follwoing fucntion.
             // The count will take care of the milliseconds
-            if (this.count/10 > 100) {
+            if (this.count == 999) {
                 if (MainActivity.this.seconds == 59) {
                     MainActivity.this.seconds = -1;
                     MainActivity.this.minutes++;
@@ -206,20 +207,19 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.seconds++;
                 this.count = -1;
             }
+            Counter.this.count++;
             // Tell Android to run the following code on the UI thread
             // A Runnable is an object that implements a run method
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    millisecond_text = (Counter.this.count/10 < 10) ? "0" + Counter.this.count/10 : Integer.toString(Counter.this.count/10);
+                    millisecond_text = (count/10 < 10) ? "0" + count/10 : Integer.toString(count/10);
                     seconds_text = (MainActivity.this.seconds < 10) ? "0" + MainActivity.this.seconds : Integer.toString(MainActivity.this.seconds);
                     minute_text = (MainActivity.this.minutes < 10) ? "0" + MainActivity.this.minutes : Integer.toString(MainActivity.this.minutes);
 
                     MainActivity.this.tv_milliseconds.setText(millisecond_text);
                     MainActivity.this.tv_seconds.setText(String.valueOf(seconds_text));
                     MainActivity.this.tv_minutes.setText(String.valueOf(minute_text));
-
-                    Counter.this.count++;
                 }
             });
         }
