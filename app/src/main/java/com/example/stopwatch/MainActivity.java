@@ -176,17 +176,20 @@ public class MainActivity extends AppCompatActivity {
         String minutes = getPreferences(MODE_PRIVATE).getString("minutes", "00");
 
         // This means the user has pressed back; and a shared state is avaiable
-        if (!(milliseconds.equals("00") && seconds.equals("00") && minutes.equals("00"))) {
+        if (getPreferences(MODE_PRIVATE).getString("backPressed", "false").equals("true")) {
             changeButton(btn_main, "Resume", getResources().getColor(R.color.holo_blue_light));
             stoppedAtCount = Integer.parseInt(milliseconds);
             MainActivity.this.seconds = Integer.parseInt(seconds);
             MainActivity.this.minutes = Integer.parseInt(minutes);
 
+            this.tv_milliseconds.setText(milliseconds);
+            this.tv_seconds.setText(seconds);
+            this.tv_minutes.setText(minutes);
+            getPreferences(MODE_PRIVATE)
+                    .edit()
+                    .putString("backPressed", "false")
+                    .apply();
         }
-
-        this.tv_milliseconds.setText(milliseconds);
-        this.tv_seconds.setText(seconds);
-        this.tv_minutes.setText(minutes);
 
         this.ctr = new Counter();
         this.ctr.count = Integer.parseInt(milliseconds);
@@ -211,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
                 .putString("milliseconds", millisecond_text)
                 .putString("seconds", seconds_text)
                 .putString("minutes", minute_text)
+                .putString("backPressed", "true")
                 .apply();
     }
 
