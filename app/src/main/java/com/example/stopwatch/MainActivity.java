@@ -192,8 +192,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onBackPressed() {
+        super.onBackPressed();
         // Save the counter
         getPreferences(MODE_PRIVATE)
                 .edit()
@@ -201,6 +201,11 @@ public class MainActivity extends AppCompatActivity {
                 .putString("seconds", seconds_text)
                 .putString("minutes", minute_text)
                 .apply();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     class Counter extends TimerTask {
