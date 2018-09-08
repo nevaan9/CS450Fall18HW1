@@ -2,6 +2,7 @@ package com.example.stopwatch;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Build;
@@ -23,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_seconds = null;
     private TextView tv_milliseconds = null;
     private TextView tv_minutes = null;
-    private Button btn_start = null;
-    private Button btn_stop = null;
+    private Button btn_main = null;
+    private Button btn_resume = null;
     private Timer t = null;
     private Counter ctr = null; // Timer Task
 
@@ -46,23 +47,8 @@ public class MainActivity extends AppCompatActivity {
         this.tv_seconds = findViewById(R.id.tv_seconds);
         this.tv_milliseconds = findViewById(R.id.tv_milliseconds);
         this.tv_minutes = findViewById(R.id.tv_minutes);
-        this.btn_start = findViewById(R.id.btn_start);
-        this.btn_stop = findViewById(R.id.btn_stop);
-
-        // Now we have access to the instance variables/UI elements
-        this.btn_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // This is an ANNONYMOUS INNER CLASS
-                // Annonymous inner classes have access to variables in their parent element
-
-                // Disable the start button
-                btn_start.setEnabled(false);
-
-                // We cannot use this, as this corresponds to the OnClickListener Class
-                t.scheduleAtFixedRate(ctr, 0 , 1);
-            }
-        });
+        this.btn_main = findViewById(R.id.btn_main);
+        this.btn_resume = findViewById(R.id.btn_reset);
 
         // Load the audio stuff
         this.aa = new AudioAttributes
@@ -92,12 +78,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Now we have access to the instance variables/UI elements
+        this.btn_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (btn_main.getText().toString().equals("Start")) {
+                    // This is an ANNONYMOUS INNER CLASS
+                    // Annonymous inner classes have access to variables in their parent element
+
+                    // We cannot use this, as this corresponds to the OnClickListener Class
+                    t.scheduleAtFixedRate(ctr, 0 , 1);
+
+                    // Change the button colors and text
+                    changeButton(btn_main, "Stop", Color.RED);
+                } else if (btn_main.getText().toString().equals("Stop")) {
+                    // Stop the counter
+                    t.cancel();
+                    // Change the Stop button to a Resume Button
+                    changeButton(btn_main, "Resume", Color.GRAY);
+                } else if (btn_main.getText().toString().equals("Resume")) {
+                    // Change the Resume button to a Stop Button
+                    changeButton(btn_main, "Stop", Color.RED);
+                }
+            }
+        });
+
         // The stop button
-        this.btn_stop.setOnClickListener(new View.OnClickListener() {
+        this.btn_resume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 t.cancel();
-
             }
         });
     }
@@ -175,5 +186,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    // Class Helper Functions
+    protected void changeButton(Button btn, String buttonText, int buttonColor) {
+        btn.setText(buttonText);
+        btn.setBackgroundColor(buttonColor);
     }
 }
