@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private String millisecond_text = "00";
     private String seconds_text = "00";
     private String minute_text = "00";
+    private boolean backButtonHit = false;
 
     // Initialize the audio attributes
     private AudioAttributes aa = null;
@@ -173,6 +174,15 @@ public class MainActivity extends AppCompatActivity {
         String milliseconds = getPreferences(MODE_PRIVATE).getString("milliseconds", "00");
         String seconds = getPreferences(MODE_PRIVATE).getString("seconds", "00");
         String minutes = getPreferences(MODE_PRIVATE).getString("minutes", "00");
+
+        // This means the user has pressed back; and a shared state is avaiable
+        if (!(milliseconds.equals("00") && seconds.equals("00") && minutes.equals("00"))) {
+            changeButton(btn_main, "Resume", getResources().getColor(R.color.holo_blue_light));
+            stoppedAtCount = Integer.parseInt(milliseconds);
+            MainActivity.this.seconds = Integer.parseInt(seconds);
+            MainActivity.this.minutes = Integer.parseInt(minutes);
+
+        }
 
         this.tv_milliseconds.setText(milliseconds);
         this.tv_seconds.setText(seconds);
