@@ -134,8 +134,13 @@ public class MainActivity extends AppCompatActivity {
         this.btn_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Cancel the timer
-                t.cancel();
+                // Cancel the timer;
+                if (t != null){
+                    t.cancel();
+                } else {
+                    // Start the timer again
+                    MainActivity.this.t = new Timer();
+                }
 
                 // Reset the seconds and minutes instance variables
                 ctr.count = 0;
