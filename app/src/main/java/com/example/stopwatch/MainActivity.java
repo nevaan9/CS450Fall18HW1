@@ -196,12 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
         // pop ups
         // This is a factory method (a design pattern)
-        Toast.makeText(this, "Stopwatch is starting", Toast.LENGTH_LONG)
-                .show();
-
-        // Debug messages - Use Log class to do this!
-        // Log.i("Hello");
-        // Log.wtf();
+        Toast.makeText(this, "Stopwatch is starting", Toast.LENGTH_LONG).show();
 
     }
 
