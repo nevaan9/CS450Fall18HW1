@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_milliseconds = null;
     private TextView tv_minutes = null;
     private Button btn_main = null;
-    private Button btn_resume = null;
+    private Button btn_reset = null;
     private Timer t = null;
     private Counter ctr = null; // Timer Task
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         this.tv_milliseconds = findViewById(R.id.tv_milliseconds);
         this.tv_minutes = findViewById(R.id.tv_minutes);
         this.btn_main = findViewById(R.id.btn_main);
-        this.btn_resume = findViewById(R.id.btn_reset);
+        this.btn_reset = findViewById(R.id.btn_reset);
 
         // Load the audio stuff
         this.aa = new AudioAttributes
@@ -91,24 +91,24 @@ public class MainActivity extends AppCompatActivity {
                     t.scheduleAtFixedRate(ctr, 0 , 1);
 
                     // Change the button colors and text
-                    changeButton(btn_main, "Stop", Color.RED);
+                    changeButton(btn_main, "Stop", getResources().getColor(R.color.holo_red_light));
                 } else if (btn_main.getText().toString().equals("Stop")) {
                     // Stop the counter
                     t.cancel();
                     // Change the Stop button to a Resume Button
-                    changeButton(btn_main, "Resume", Color.GRAY);
+                    changeButton(btn_main, "Resume", getResources().getColor(R.color.holo_blue_light));
                 } else if (btn_main.getText().toString().equals("Resume")) {
                     // Change the Resume button to a Stop Button
-                    changeButton(btn_main, "Stop", Color.RED);
+                    changeButton(btn_main, "Stop", getResources().getColor(R.color.holo_red_light));
                 }
             }
         });
 
         // The stop button
-        this.btn_resume.setOnClickListener(new View.OnClickListener() {
+        this.btn_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                t.cancel();
+                changeButton(btn_main, "Start", getResources().getColor(R.color.holo_green_light));
             }
         });
     }
