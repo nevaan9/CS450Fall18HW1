@@ -47,10 +47,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Clear the shared preferences
-        SharedPreferences settings = getSharedPreferences("PreferencesName", Context.MODE_PRIVATE);
-        settings.edit().clear().apply();
-
         // Activity main is the activity_main.xml file
         setContentView(R.layout.activity_main);
 
@@ -194,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        // Save the counter
+        // Save the counter variables
         getPreferences(MODE_PRIVATE)
                 .edit()
                 .putString("milliseconds", millisecond_text)
