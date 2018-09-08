@@ -129,6 +129,25 @@ public class MainActivity extends AppCompatActivity {
         this.btn_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Cancel the timer
+                t.cancel();
+
+                // Reset the seconds and minutes instance variables
+                MainActivity.this.seconds = 0;
+                MainActivity.this.minutes = 0;
+
+                // Update the UI
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MainActivity.this.tv_milliseconds.setText("00");
+                        MainActivity.this.tv_seconds.setText("00");
+                        MainActivity.this.tv_minutes.setText(String.valueOf("00"));
+                    }
+                });
+
+                // Reset the timerTask
+                MainActivity.this.ctr = new Counter();
                 changeButton(btn_main, "Start", getResources().getColor(R.color.holo_green_light));
             }
         });
