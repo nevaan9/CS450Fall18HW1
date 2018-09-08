@@ -19,26 +19,26 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_minutes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00"
-                android:textSize="118sp"
-                android:id="@+id/tv_minutes"/>
+                android:textSize="60dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingBottom="20dp"
+                android:paddingBottom="10dp"
                 android:text=":"
-                android:textSize="118sp" />
+                android:textSize="60dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00"
-                android:textSize="118sp"
+                android:textSize="60dp"
                 android:id="@+id/tv_seconds"/>
 
             <TextView
@@ -46,15 +46,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingBottom="20dp"
-                android:text=":"
-                android:textSize="118sp" />
+                android:paddingBottom="10dp"
+                android:text="."
+                android:textSize="60dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00"
-                android:textSize="118sp"
+                android:textSize="60dp"
                 android:id="@+id/tv_milliseconds"/>
 
         </LinearLayout>
