@@ -121,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
                     // Change the Stop button to a Resume Button
                     changeButton(btn_main, "Resume", getResources().getColor(R.color.holo_blue_light));
 
+                    // Change progress bar color
+                    circularProgressBar.setColor(getResources().getColor(R.color.holo_blue_light));
+
+
                 } else if (btn_main.getText().toString().equals("Resume")) {
                     // Start the timer again
                     MainActivity.this.t = new Timer();
@@ -134,6 +138,9 @@ public class MainActivity extends AppCompatActivity {
 
                     // Change the Resume button to a Stop Button
                     changeButton(btn_main, "Stop", getResources().getColor(R.color.holo_red_light));
+
+                    // Change the progress bar color
+                    circularProgressBar.setColor(Color.RED);
                 }
             }
         });
@@ -197,8 +204,10 @@ public class MainActivity extends AppCompatActivity {
             this.tv_seconds.setText(seconds);
             this.tv_minutes.setText(minutes);
 
+            // Make appropriate changes to the progress bar
             float progress = (100f / 59f) * Float.parseFloat(seconds);
             circularProgressBar.setProgress(progress);
+            circularProgressBar.setColor(getResources().getColor(R.color.holo_blue_light));
 
             getPreferences(MODE_PRIVATE)
                     .edit()
