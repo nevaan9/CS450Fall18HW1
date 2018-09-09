@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
         // pop ups
         // This is a factory method (a design pattern)
-        Toast.makeText(this, "Stopwatch is starting", Toast.LENGTH_LONG).show();
+        // Toast.makeText(this, "Stopwatch is starting", Toast.LENGTH_LONG).show();
 
     }
 
