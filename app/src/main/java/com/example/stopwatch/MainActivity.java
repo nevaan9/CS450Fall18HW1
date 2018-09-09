@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         // This means the user has pressed back; and a shared state is avaiable
         if (getPreferences(MODE_PRIVATE).getString("backPressed", "false").equals("true")) {
             changeButton(btn_main, "Resume", getResources().getColor(R.color.holo_blue_light));
-            stoppedAtCount = Integer.parseInt(milliseconds);
+            stoppedAtCount = Integer.parseInt(milliseconds)*10;
             MainActivity.this.seconds = Integer.parseInt(seconds);
             MainActivity.this.minutes = Integer.parseInt(minutes);
 
