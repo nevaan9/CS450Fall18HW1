@@ -179,6 +179,9 @@ public class MainActivity extends AppCompatActivity {
                 // Reset the timerTask
                 MainActivity.this.ctr = new Counter();
                 changeButton(btn_main, "Start", getResources().getColor(R.color.holo_green_light));
+
+                // Change the progress bar color
+                circularProgressBar.setColor(Color.RED);
             }
         });
     }
